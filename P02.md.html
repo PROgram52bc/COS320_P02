@@ -24,11 +24,11 @@ It is a common practice for Christians to make Bible reading plans by dividing t
 The Bible is naturally splitted into chapters, and each chapter contains a variable number of verses. When making a plan, it is usually desirable to have the verses distributed across the days as evenly as possible (that is, we want to read approximately the same number of verses each day). However, when trying to distribute the verses into some $n$ days, we don't want to cut through the chapter boundaries.
 
 To formulate the problem, given some $m$ ordered chapters with the corresponding number of verses $\{ V_1,...,V_m \}$ contained in each of them, and $n$ days ($m>=n$), we want to come up with a *plan* for those $n$ days, $\{ P_1,...,P_n \}$, where $P_i$ ($P_i>0$) is the number of chapters to be read on day $i$. The given plan $P$ must satisfy the constraint that 
-$$(\sum_{i=1}^{n} P_i) = m$$
-This also implies that chapters must be arranged in their original order (in other words, no reordering of the chapters are allowed). 
+$$\left(\sum_{i=1}^{n} P_i\right) = m$$
+This also implies that chapters must be arranged in their original order (in other words, no reordering of the chapters is allowed). 
 
 To penalize unevenly distributed verses, for each day $i$, we introduce a cost, $C_i$, that penalizes the amount of verses exceeding or falling short of the average $V_{avg}$. The cost for day $i$ can be defined as
-$$C_i = ((\sum_{j=\nu_{i}}^{\nu_{i}+P_i-1} V_j) - V_{avg})^2$$
+$$C_i = \left(\left(\sum_{j=\nu_{i}}^{\nu_{i}+P_i-1} V_j\right) - V_{avg}\right)^2$$
 where $\nu_i$ is the first chapter planned to be read at day $i$, or, $\nu_i = (\sum_{k=1}^{i-1} P_k) + 1$, and $V_{avg}$ is the average amount of verses to be read per day. 
 
 As a side note, theoretically, $V_{avg}$ can be calculated by dividing the number of verses by the number of days; however, to account for the fact that this average might not always be an integer, $V_{avg}$ is given in this problem as an integer that you can use directly.
