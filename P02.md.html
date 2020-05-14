@@ -27,11 +27,12 @@ To formulate the problem, given some $m$ ordered chapters with the corresponding
 $$\left(\sum_{i=1}^{n} P_i\right) = m$$
 This also implies that chapters must be arranged in their original order (in other words, no reordering of the chapters is allowed). 
 
-To penalize unevenly distributed verses, for each day $i$, we introduce a cost, $C_i$, that penalizes the amount of verses exceeding or falling short of the average $V_{avg}$. The cost for day $i$ can be defined as
+To penalize unevenly distributed verses, for each day $i$, we introduce a cost, $C_i$, that penalizes the amount of verses exceeding or falling short of the average number of verses to be read per day, $V_{avg}$. Thus, the cost for day $i$ can be defined as
 $$C_i = \left(\left(\sum_{j=\nu_{i}}^{\nu_{i}+P_i-1} V_j\right) - V_{avg}\right)^2$$
 where $\nu_i$ is the first chapter planned to be read at day $i$, or, $\nu_i = (\sum_{k=1}^{i-1} P_k) + 1$, and $V_{avg}$ is the average amount of verses to be read per day. 
 
-As a side note, theoretically, $V_{avg}$ can be calculated by dividing the number of verses by the number of days; however, to account for the fact that this average might not always be an integer, $V_{avg}$ is given in this problem as an integer that you can use directly.
+!!! note: Side Note
+    Theoretically, $V_{avg}$ can be calculated by dividing the number of verses by the number of days; however, to account for the fact that this average might not always be an integer, $V_{avg}$ is given in this problem as an integer that you can assume is the actual average and use directly.
 
 So our objective in coming up with the plan $P$ is to minimize the total cost
 
