@@ -6,7 +6,10 @@ m,n,average = [ int(n) for n in lines[0].split(" ") ]
 verseCounts = [0]
 
 if m == n:
-    print(pow(int(lines[1]) - average, 2) * m)
+    tcost = 0
+    for i in range(1,m+1):
+        tcost += pow(int(lines[i]) - average, 2)
+    print(tcost)
     print()
     for i in range(m):
         print('1')
@@ -14,7 +17,6 @@ else:
     for num in lines[1:]:
         verseCounts.append(int(num))
         
-
     ## test data
     # m = 10
     # n = 5
