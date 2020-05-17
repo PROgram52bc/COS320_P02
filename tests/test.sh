@@ -3,17 +3,38 @@ DIR="$(dirname ${BASH_SOURCE[0]})"
 cd "$DIR"
 
 TARGET_SCRIPT="python3 ../solution1.py"
+EDGE_CASE_TESTER="python3 test_edge_case.py"
 echo "testing on $TARGET_SCRIPT"
 
 for INFILE in *.in; do
 	ROOT=${INFILE%\.in}
 	OUTFILE=${ROOT}.ans
-	eval $TARGET_SCRIPT < ${INFILE} | diff $OUTFILE -
+	OUTPUT=$(eval $TARGET_SCRIPT < ${INFILE})
+	# compare given output file with the generated output
+	eval diff $OUTFILE <(echo "$OUTPUT") 2>&1 1>/dev/null
 	ret=$?
 	if [ $ret -eq 0 ]; then
 		echo "PASSED...${ROOT}"
 	elif [ $ret -eq 1 ]; then
-		echo "FAILED...${ROOT}"
+		# compare first line (cost)
+		if eval diff <(head -n 1 $OUTFILE) <(echo "$OUTPUT" | head -n 1) 2>&1 1>/dev/null; then
+			echo "TESTING EDGE CASE...${ROOT}"
+			eval $EDGE_CASE_TESTER ${INFILE} <(eval $TARGET_SCRIPT < ${INFILE})
+			edge_ret=$?
+			if [ $edge_ret -eq 0 ]; then
+				echo "PASSED EDGE CASE"
+			elif [ $edge_ret -eq 101 ]; then
+				echo "FAILED EDGE CASE: day number doesn't match"
+			elif [ $edge_ret -eq 102 ]; then
+				echo "FAILED EDGE CASE: chapter number doesn't match"
+			elif [ $edge_ret -eq 103 ]; then
+				echo "FAILED EDGE CASE: cost doesn't match"
+			else
+				echo "Unknown edge case error"
+			fi
+		else
+			echo "FAILED: incorrect cost...${ROOT}"
+		fi
 	elif [ $ret -eq 2 ]; then
 		echo "ERROR...${ROOT}"
 	else
