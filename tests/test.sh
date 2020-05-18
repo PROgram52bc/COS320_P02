@@ -1,8 +1,12 @@
 #!/bin/bash
+# The purpose of this file is to test the correctness of a given solution based on test files in the current directory
+
 DIR="$(dirname ${BASH_SOURCE[0]})"
 cd "$DIR"
 
+# specify the target solution to be tested
 TARGET_SCRIPT="python3 ../solution1.py"
+# specify the edge case tester
 EDGE_CASE_TESTER="python3 test_edge_case.py"
 echo "testing on $TARGET_SCRIPT"
 

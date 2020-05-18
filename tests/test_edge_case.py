@@ -1,21 +1,17 @@
+""" This script checks if certain output file has the valid plan for its given cost """
 import sys
 import fileinput
 
 def cost(nverse, avgverse):
-    """ return the cost of reading from start to end (inclusive), calculating against average
-
-    :start: the starting chapter. 0<start<=m
-    :end: the ending chapter. 0<start<=m
-    :average: an average to be calculated against
-    :returns: the cost
-
-    """
     return pow(nverse-avgverse, 2)
 
 if len(sys.argv) != 3:
     print("Usage: python3 {} [input_file] [output_file]".format(sys.argv[0]))
     print("Test whether the output file is a valid output for the input file")
-    print("Returns -1 when parameters do not match")
+    print("Returns 100 when parameters do not match")
+    print("Returns 101 when day number does not match")
+    print("Returns 102 when chapter number does not match")
+    print("Returns 103 when cost does not match")
     sys.exit(100)
 
 inFileName, outFileName = [ f for f in sys.argv[1:] ]
