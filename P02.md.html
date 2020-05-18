@@ -19,12 +19,14 @@ additional help          | Solution advice from Dr.Denning
 
 # Problem Description
 
-The Goal for this project is to decide how many chapters to read each day. It is a common practice for Christians to make Bible reading plans by dividing the Bible into a number of smaller chunks, and read each of those smaller chunks per day. 
+It is a common practice for Christians to make Bible reading plans by dividing the Bible into a number of smaller chunks, and read each of those smaller chunks per day. 
 
-The Bible is naturally splitted into chapters, and each chapter contains a variable number of verses. When making a plan, it is usually desirable to have the verses distributed across the days as evenly as possible (that is, we want to read approximately the same number of verses each day). However, when trying to distribute the verses into some $n$ days, we don't want to cut through the chapter boundaries.
+The Bible is naturally splitted into chapters, and when making a reading plan, we don't want to cut through the chapter boundaries. At the same time, each chapter contains a variable number of verses. When making a plan, it is also desirable to have the verses distributed across the days as evenly as possible (that is, we want to read approximately the same number of verses each day). So our goal is to make a plan that does not cut through chapter boundaries, and at the same time, distribute the verses across the days as evenly as possible.
 
-To formulate the problem, given some $m$ ordered chapters with the corresponding number of verses $\{ V_1,...,V_m \}$ contained in each of them, and $n$ days ($m>=n$), we want to come up with a *plan* for those $n$ days, $\{ P_1,...,P_n \}$, where $P_i$ ($P_i>0$) is the number of chapters to be read on day $i$. The given plan $P$ must satisfy the constraint that 
+To formulate the problem, given some $m$ ordered chapters with the corresponding number of verses $\{ V_1,...,V_m \}$ contained in each of them, and $n$ days ($m>=n$), we want to come up with a *plan* for those $n$ days, $\{ P_1,...,P_n \}$, where $P_i$ ($P_i>=1$) is an integer indicating the number of chapters to be read on day $i$. The given plan $P$ must satisfy the constraint that 
+
 $$\left(\sum_{i=1}^{n} P_i\right) = m$$
+
 This also implies that chapters must be arranged in their original order (in other words, no reordering of the chapters is allowed). 
 
 To penalize unevenly distributed verses, for each day $i$, we introduce a cost, $C_i$, that penalizes the amount of verses exceeding or falling short of the average number of verses to be read per day, $V_{avg}$. Thus, the cost for day $i$ can be defined as
@@ -40,11 +42,19 @@ $$C=\sum_{i=1}^n C_i$$
 
 ---
 
-To further clarify the problem, let's look at an example. Suppose we want to make a plan that distributes $3$ chapters among $2$ days. Let the $3$ chapters contain $V_1=2$,$V_2=3$,and $V_3=1$ verses respectively. Then the average number of verses to be read per day is $V_{avg} = (2+3+1)/2 = 3$.
+To further clarify the problem, let's look at an example. Suppose we want to make a plan that distributes $m=3$ chapters among $n=2$ days. Let the $3$ chapters contain $V_1=2$,$V_2=3$,and $V_3=1$ verses respectively. Then the average number of verses to be read per day is 
 
-One possible plan for this setup is to assign $2$ chapters to day $1$ ($P_1 = 2$), and $1$ chapter to day $2$ ($P_2=1$). Then the cost of this plan would be $((2+3)-3)^2 + (1-3)^2 = 4+4 = 8$. 
+$$V_{avg} = (V_1+V_2+V_3)/n = (2+3+1)/2 = 3$$
 
-However, there is a better alternative that assigns $1$ chapter to day $1$ ($P_1=1$), and $2$ chapters to day $2$ ($P_2=2$), with a cost of $(2-3)^2+((3+1)-3)^2 = 1+1 = 2$. And it turns out that the second plan has a minimum cost.
+One possible plan for this setup is to assign $2$ chapters to day $1$ ($P_1 = 2$), and $1$ chapter to day $2$ ($P_2=1$). Then the cost of this plan would be 
+
+$$((V_1+V_2)-V_{avg})^2 + (V_3-V_{avg})^2 = ((2+3)-3)^2 + (1-3)^2 = 4+4 = 8$$
+
+However, there is a better alternative that assigns $1$ chapter to day $1$ ($P_1=1$), and $2$ chapters to day $2$ ($P_2=2$), with a cost of 
+
+$$(V_1-V_{avg})^2 + ((V_2+V_3)-V_{avg})^2 = (2-3)^2+((3+1)-3)^2 = 1+1 = 2$$ 
+
+And it turns out that the second plan has a minimum cost.
 
 
 # Input
